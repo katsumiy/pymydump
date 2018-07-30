@@ -134,6 +134,10 @@ class PyDump():
 			self.output.write(entry, column.strftime('%Y-%m-%d'))
 		elif description[1] == pymysql.constants.FIELD_TYPE.TIME:
 			self.output.write(entry, str(column))
+		elif description[1] == pymysql.constants.FIELD_TYPE.FLOAT:
+			self.output.write(entry, str(column))
+		elif description[1] == pymysql.constants.FIELD_TYPE.DOUBLE:
+			self.output.write(entry, str(column))
 		elif description[1] == pymysql.constants.FIELD_TYPE.BLOB and field.charsetnr == 63:
 			self.output.write(entry, '\\x' + column.hex())
 		elif description[1] == pymysql.constants.FIELD_TYPE.BLOB:
@@ -244,7 +248,6 @@ class PyDump():
 
 		while line:
 			columns = line.split('\t')
-			print(len(columns))
 			if sql is None:
 				temp = '%s,' * len(columns)
 				sql = 'INSERT INTO ' + table + ' values(' + temp[:-1] + ')'
